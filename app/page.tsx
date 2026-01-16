@@ -1,9 +1,27 @@
-import React from 'react'
+import Image from "next/image";
+import Link from "next/link";
+import Datatable from "@/components/Datatable";
+import { TrendingUp, TrendingDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { fetcher } from "@/lib/coingecko.actions";
 
-const page = () => {
+
+
+const Page = async () => {
+
+
   return (
-    <p className="text-2xl font-bold text-indigo-700">Welcome to CoinPip</p>
-  )
-}
+    <main className="main-container">
+      <section className="home-grid">
 
-export default page
+
+
+      </section>
+      <section className='w-full mt-7 space-y-4'>
+        <p>Categories</p>
+      </section>
+    </main>
+  );
+};
+
+export default Page;
