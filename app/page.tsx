@@ -1,27 +1,29 @@
-import Image from "next/image";
-import Link from "next/link";
-import Datatable from "@/components/Datatable";
-import { TrendingUp, TrendingDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { fetcher } from "@/lib/coingecko.actions";
-
-
+import { Suspense } from "react";
+import CoinOverview from "@/components/home/CoinOverview";
+import TrendingCoins from "@/components/home/TrendingCoin";
+import {
+    CoinOverviewFallback,
+    TrendingCoinFallback,
+} from "@/components/home/fallback";
 
 const Page = async () => {
+    return (
+        <main className="main-container">
+            <section className="home-grid">
+                <Suspense fallback={<CoinOverviewFallback />}>
+                    <CoinOverview />
+                </Suspense>
 
+                <Suspense fallback={<TrendingCoinFallback />}>
+                    <TrendingCoins />
+                </Suspense>
+            </section>
 
-  return (
-    <main className="main-container">
-      <section className="home-grid">
-
-
-
-      </section>
-      <section className='w-full mt-7 space-y-4'>
-        <p>Categories</p>
-      </section>
-    </main>
-  );
+            <section className="w-full mt-7 space-y-4">
+                <p>Categories</p>
+            </section>
+        </main>
+    );
 };
 
 export default Page;
