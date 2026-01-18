@@ -91,15 +91,16 @@ export const getChartConfig = (
     },
 });
 
+// Update this in your constants file
 export const PERIOD_CONFIG: Record<
     Period,
-    { days: number | string; interval?: 'hourly' | 'daily' }
+    { days: number | string } // Removed interval from the type definition
 > = {
-    daily: { days: 1, interval: 'hourly' },
-    weekly: { days: 7, interval: 'hourly' },
-    monthly: { days: 30, interval: 'hourly' },
-    '3months': { days: 90, interval: 'daily' },
-    '6months': { days: 180, interval: 'daily' },
+    daily: { days: 1 },
+    weekly: { days: 7 },
+    monthly: { days: 30 },
+    '3months': { days: 90 },
+    '6months': { days: 180 },
     yearly: { days: 365 },
     max: { days: 'max' },
 };
