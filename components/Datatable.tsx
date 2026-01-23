@@ -54,7 +54,7 @@ const Datatable = <T,>({
                                 key={index}
                                 className={cn(
                                     "bg-dark-400 text-purple-100 py-4 first:pl-5 last:pr-6",
-                                    headerCellClassName
+                                    headerCellClassName, column.headClassName
                                 )}
                             >
                                 {column.header}
@@ -98,7 +98,7 @@ const Datatable = <T,>({
                             colSpan={columns.length || 1}
                             className="py-6 text-center text-sm text-muted-foreground"
                         >
-                            No data available
+
                         </TableCell>
                     </TableRow>
                 )}
