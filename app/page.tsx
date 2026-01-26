@@ -1,30 +1,30 @@
-import { Suspense } from "react";
+'use client';
+
+import { useState } from "react";
 import CoinOverview from "@/components/home/CoinOverview";
 import TrendingCoins from "@/components/home/TrendingCoin";
+import Categories from "@/components/home/Categories";
 import {
     CoinOverviewFallback,
-    TrendingCoinFallback,
+    TrendingCoinFallback
 } from "@/components/home/fallback";
-import Categories from "@/components/home/Categories";
 
-const Page = async () => {
+const Page = () => {
+    // Shared state: Chart will listen to this ID
+    const [activeCoinId, setActiveCoinId] = useState("bitcoin");
+
     return (
         <main className="main-container">
             <section className="home-grid">
-                <Suspense fallback={<CoinOverviewFallback />}>
-                    <CoinOverview />
-                </Suspense>
+                {/* We pass the activeCoinId to the overview chart */}
+                <CoinOverview coinId={activeCoinId} />
 
-                <Suspense fallback={<TrendingCoinFallback />}>
-                    <TrendingCoins />
-                </Suspense>
+                {/* Pass the setter function to handle clicks */}
+                <TrendingCoins onSelect={setActiveCoinId} activeCoinId={activeCoinId} />
             </section>
 
             <section className="w-full mt-7 space-y-4">
-                <Suspense fallback={<p>Loading categories</p>}>
-                    <Categories />
-                </Suspense>
-
+                <Categories onSelect={setActiveCoinId} />
             </section>
         </main>
     );

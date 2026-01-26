@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link'; // Added Link
 import { fetcher } from '@/lib/coingecko.actions';
 import Datatable, { type DataTableColumn } from '@/components/Datatable';
 import Pagination from '@/components/ui/pagination';
-
 
 type CoinData = {
     id: string;
@@ -17,16 +17,12 @@ type CoinData = {
     total_volume: number;
 };
 
-// 1. Update Type: searchParams is a Promise
 type PageProps = {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 const page = async ({ searchParams }: PageProps) => {
-    // 2. Await the searchParams before using them
     const params = await searchParams;
-
-    // 3. Now access the page from the awaited params
     const currentPage = Number(params?.page) || 1;
     const perPage = 10;
 
@@ -50,24 +46,24 @@ const page = async ({ searchParams }: PageProps) => {
             header: 'Coin',
             cellClassName: 'min-w-[200px]',
             cell: (coin) => (
-                <div className="flex items-center gap-3">
+                <Link href={`/?coin=${coin.id}`} className="flex items-center gap-3 group">
                     <Image
                         src={coin.image}
                         alt={coin.name}
                         width={32}
                         height={32}
-                        className="rounded-full"
+                        className="rounded-full transition-transform group-hover:scale-110"
                     />
                     <div className="flex flex-col">
-                        <span className="font-bold text-gray-900">{coin.name}</span>
+                        <span className="font-bold text-white group-hover:text-green-500 transition-colors">{coin.name}</span>
                         <span className="text-xs text-gray-500 uppercase">{coin.symbol}</span>
                     </div>
-                </div>
+                </Link>
             ),
         },
         {
             header: 'Price',
-            cellClassName: 'text-right font-medium',
+            cellClassName: 'text-right font-medium text-white',
             cell: (coin) => formatUSD(coin.current_price),
         },
         {
@@ -84,35 +80,31 @@ const page = async ({ searchParams }: PageProps) => {
             },
         },
         {
-            header: '24h Volume',
-            cellClassName: 'text-right hidden md:table-cell',
-            cell: (coin) => formatCompact(coin.total_volume),
-        },
-        {
             header: 'Market Cap',
-            cellClassName: 'text-right font-medium',
+            cellClassName: 'text-right font-medium text-gray-300',
             cell: (coin) => formatCompact(coin.market_cap),
         },
     ];
 
     return (
-        <div className="w-full">
+        <div className="w-full bg-dark-400 p-6 rounded-xl border border-dark-300">
+            <h2 className="text-2xl font-bold mb-6 text-white">Cryptocurrency Prices</h2>
 
-            <h2 className="text-2xl font-bold mb-6">Cryptocurrency Prices by Market Cap</h2>
-
-            <div className="custom-scrollbar overflow-x-auto rounded-lg border border-gray-100 shadow-sm">
+            <div className="custom-scrollbar overflow-x-auto">
                 <Datatable
                     columns={columns}
                     data={coins || []}
                     rowKey={(row) => row.id}
-                    tableClassName="w-full text-sm text-left rtl:text-right text-gray-500"
+                    tableClassName="w-full text-sm text-left text-gray-400"
                 />
             </div>
 
-            <Pagination
-                currentPage={currentPage}
-                totalPages={100}
-            />
+            <div className="mt-8 flex justify-center">
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={100}
+                />
+            </div>
         </div>
     );
 };

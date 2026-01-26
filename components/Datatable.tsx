@@ -13,13 +13,16 @@ import { cn } from "@/lib/utils";
    Types
 ======================= */
 
-export type Column<T> = {
+// RENAMED: from Column to DataTableColumn to match your import
+export type DataTableColumn<T> = {
     header: React.ReactNode;
     cell: (row: T, index: number) => React.ReactNode;
+    // ADDED: This is required because you use column.headClassName in the render loop
+    headClassName?: string;
 };
 
 export type DatatableProps<T> = {
-    columns?: Column<T>[];
+    columns?: DataTableColumn<T>[]; // Updated reference here
     data?: T[];
     rowKey?: (row: T, index: number) => React.Key;
     tableClassName?: string;
@@ -54,7 +57,8 @@ const Datatable = <T,>({
                                 key={index}
                                 className={cn(
                                     "bg-dark-400 text-purple-100 py-4 first:pl-5 last:pr-6",
-                                    headerCellClassName, column.headClassName
+                                    headerCellClassName,
+                                    column.headClassName
                                 )}
                             >
                                 {column.header}
@@ -98,7 +102,7 @@ const Datatable = <T,>({
                             colSpan={columns.length || 1}
                             className="py-6 text-center text-sm text-muted-foreground"
                         >
-
+                            No data available
                         </TableCell>
                     </TableRow>
                 )}
