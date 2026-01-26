@@ -5,6 +5,24 @@ import {
     DeepPartial,
 } from 'lightweight-charts';
 
+/* =======================
+    Types
+======================= */
+
+// Exporting the Period type so it can be used in CandlestickChart.tsx
+export type Period =
+    | 'daily'
+    | 'weekly'
+    | 'monthly'
+    | '3months'
+    | '6months'
+    | 'yearly'
+    | 'max';
+
+/* =======================
+    Navigation
+======================= */
+
 export const navItems = [
     {
         label: 'Home',
@@ -20,6 +38,10 @@ export const navItems = [
     },
 ];
 
+/* =======================
+    Chart Colors
+======================= */
+
 const CHART_COLORS = {
     background: '#0b1116',
     text: '#8f9fb1',
@@ -30,6 +52,10 @@ const CHART_COLORS = {
     candleUp: '#158A6E',
     candleDown: '#EB1C36',
 } as const;
+
+/* =======================
+    Chart Configurations
+======================= */
 
 export const getCandlestickConfig = (): CandlestickSeriesPartialOptions => ({
     upColor: CHART_COLORS.candleUp,
@@ -91,22 +117,33 @@ export const getChartConfig = (
     },
 });
 
-// Update this in your constants file
-// @/constant/index.ts
+/* =======================
+    Period & Intervals
+======================= */
 
-export type Period = 'hourly' | 'daily' | 'weekly'; // Add whatever strings you use
-
-export const PERIOD_CONFIG = {
-    hourly: { days: 1 },
-    daily: { days: 7 },
-    weekly: { days: 30 },
+export const PERIOD_CONFIG: Record<
+    Period,
+    { days: number | string }
+> = {
+    daily: { days: 1 },
+    weekly: { days: 7 },
+    monthly: { days: 30 },
+    '3months': { days: 90 },
+    '6months': { days: 180 },
+    yearly: { days: 365 },
+    max: { days: 'max' },
 };
 
-export const PERIOD_BUTTONS = [
-    { label: '1D', value: 'hourly' },
-    { label: '7D', value: 'daily' },
-    { label: '1M', value: 'weekly' },
+export const PERIOD_BUTTONS: { value: Period; label: string }[] = [
+    { value: 'daily', label: '1D' },
+    { value: 'weekly', label: '1W' },
+    { value: 'monthly', label: '1M' },
+    { value: '3months', label: '3M' },
+    { value: '6months', label: '6M' },
+    { value: 'yearly', label: '1Y' },
+    { value: 'max', label: 'Max' },
 ];
+
 export const LIVE_INTERVAL_BUTTONS: { value: '1s' | '1m'; label: string }[] = [
     { value: '1s', label: '1s' },
     { value: '1m', label: '1m' },

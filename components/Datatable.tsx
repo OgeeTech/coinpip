@@ -10,21 +10,18 @@ import {
 import { cn } from "@/lib/utils";
 
 /* =======================
-   Types
+    Types
 ======================= */
-
-// RENAMED: from Column to DataTableColumn to match your import
-// components/Datatable.tsx
 
 export type DataTableColumn<T> = {
     header: string;
-    cell: (item: T) => React.ReactNode;
+    cell: (item: T, index: number) => React.ReactNode;
     cellClassName?: string;
-    headerClassName?: string;
+    headerClassName?: string; // Corrected from headClassName to match usage
 };
 
 export type DatatableProps<T> = {
-    columns?: DataTableColumn<T>[]; // Updated reference here
+    columns?: DataTableColumn<T>[];
     data?: T[];
     rowKey?: (row: T, index: number) => React.Key;
     tableClassName?: string;
@@ -35,7 +32,7 @@ export type DatatableProps<T> = {
 };
 
 /* =======================
-   Component
+    Component
 ======================= */
 
 const Datatable = <T,>({
@@ -60,7 +57,7 @@ const Datatable = <T,>({
                                 className={cn(
                                     "bg-dark-400 text-purple-100 py-4 first:pl-5 last:pr-6",
                                     headerCellClassName,
-                                    column.headClassName
+                                    column.headerClassName // Updated to match type definition
                                 )}
                             >
                                 {column.header}
@@ -90,7 +87,8 @@ const Datatable = <T,>({
                                     key={columnIndex}
                                     className={cn(
                                         "py-4 first:pl-5 last:pr-5",
-                                        bodyCellClassName
+                                        bodyCellClassName,
+                                        column.cellClassName // Added this so your custom column styles work
                                     )}
                                 >
                                     {column.cell(row, rowIndex)}
