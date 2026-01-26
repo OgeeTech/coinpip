@@ -92,29 +92,21 @@ export const getChartConfig = (
 });
 
 // Update this in your constants file
-export const PERIOD_CONFIG: Record<
-    Period,
-    { days: number | string } // Removed interval from the type definition
-> = {
-    daily: { days: 1 },
-    weekly: { days: 7 },
-    monthly: { days: 30 },
-    '3months': { days: 90 },
-    '6months': { days: 180 },
-    yearly: { days: 365 },
-    max: { days: 'max' },
+// @/constant/index.ts
+
+export type Period = 'hourly' | 'daily' | 'weekly'; // Add whatever strings you use
+
+export const PERIOD_CONFIG = {
+    hourly: { days: 1 },
+    daily: { days: 7 },
+    weekly: { days: 30 },
 };
 
-export const PERIOD_BUTTONS: { value: Period; label: string }[] = [
-    { value: 'daily', label: '1D' },
-    { value: 'weekly', label: '1W' },
-    { value: 'monthly', label: '1M' },
-    { value: '3months', label: '3M' },
-    { value: '6months', label: '6M' },
-    { value: 'yearly', label: '1Y' },
-    { value: 'max', label: 'Max' },
+export const PERIOD_BUTTONS = [
+    { label: '1D', value: 'hourly' },
+    { label: '7D', value: 'daily' },
+    { label: '1M', value: 'weekly' },
 ];
-
 export const LIVE_INTERVAL_BUTTONS: { value: '1s' | '1m'; label: string }[] = [
     { value: '1s', label: '1s' },
     { value: '1m', label: '1m' },
