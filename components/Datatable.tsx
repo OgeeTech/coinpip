@@ -14,11 +14,13 @@ import { cn } from "@/lib/utils";
 ======================= */
 
 // RENAMED: from Column to DataTableColumn to match your import
+// components/Datatable.tsx
+
 export type DataTableColumn<T> = {
-    header: React.ReactNode;
-    cell: (row: T, index: number) => React.ReactNode;
-    // ADDED: This is required because you use column.headClassName in the render loop
-    headClassName?: string;
+    header: string;
+    cell: (item: T) => React.ReactNode;
+    cellClassName?: string;
+    headerClassName?: string;
 };
 
 export type DatatableProps<T> = {
